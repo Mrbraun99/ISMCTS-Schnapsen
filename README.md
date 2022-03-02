@@ -1,0 +1,1 @@
+# ISMCTS-Schnapsen
