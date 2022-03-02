@@ -61,6 +61,20 @@ function setup() {
             document.getElementById("player_" + i + "_name_display").innerHTML = getPlayerName(i);
         });
     }
+
+    select("#player_count_2").changed(() => {
+        document.getElementById("starting_player_1").checked = true;
+        document.getElementById("starting_player_3").style.display = "none";
+        document.getElementById("player_3_name").style.display = "none";
+        document.getElementById("player_3_score_part").style.display = "none";
+
+    });
+
+    select("#player_count_3").changed(() => {
+        document.getElementById("starting_player_3").style.display = "inline-block";
+        document.getElementById("player_3_name").style.display = "inline-block";
+        document.getElementById("player_3_score_part").style.display = "block";
+    });
 }
 
 var canvas1 = function(p) {
