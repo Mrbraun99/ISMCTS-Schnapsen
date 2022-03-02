@@ -1,3 +1,60 @@
 canvas {
     display: block;
 }
+
+select option {
+    margin: 40px;
+    background: #04466D;
+    color: #fff;
+}
+
+select {
+    background-color: #04466D;
+    color: #fff;
+}
+
+input[type=radio] {
+    padding: 0.5em;
+    -webkit-appearance: none;
+    outline: 0.1em solid black;
+    outline-offset: 0.1em;
+}
+
+input[type=radio]:checked {
+    display: inline-block;
+    background-color: #04466D;
+}
+
+input[type=checkbox] {
+    padding: 0.5em;
+    -webkit-appearance: none;
+    outline: 0.1em solid black;
+    outline-offset: 0.1em;
+}
+
+input[type=checkbox]:checked {
+    display: inline-block;
+    background-color: #04466D;
+}
+
+.button {
+    border: 2px solid #04466D;
+    background-color: white;
+    padding: 14px 28px;
+    cursor: pointer;
+    color: #04466D;
+    border-radius: 5px;
+    font-size: 20pt;
+}
+
+.button:hover {
+    background-color: #04466D;
+    color: white;
+}
+
+.button:disabled,
+.button[disabled] {
+    border: 2px solid #04AA6D;
+    background-color: #04AA6D;
+    color: white;
+}
