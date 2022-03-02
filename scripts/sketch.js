@@ -7,11 +7,13 @@ class GuiCard {
         this.color = cardProperty.color;
         this.img = cardProperty.img;
         this.position = createVector(0, 0);
+        this.highlight = false;
     }
 
     show(canvas) {
         canvas.imageMode(CENTER);
-        canvas.image(this.img, this.position.x, this.position.y, GuiCard.size.x, GuiCard.size.y);
+        let scale = (this.highlight) ? 1.3 : 1;
+        canvas.image(this.img, this.position.x, this.position.y, GuiCard.size.x * scale, GuiCard.size.y * scale);
     }
 
     isMouseOver(canvas) {
@@ -21,6 +23,18 @@ class GuiCard {
             }
         }
         return false;
+    }
+
+    changeHighlight() {
+        this.highlight = !this.highlight;
+    }
+
+    setHighlight(value) {
+        this.highlight = value;
+    }
+
+    isHighlighted() {
+        return this.highlight;
     }
 }
 
@@ -132,4 +146,54 @@ var canvas1 = function(p) {
     }
 }
 
+var canvas2 = function(p) {
+    let deck = [];
+    let selectedCard = null;
+
+    p.setup = function() {
+        p.createCanvas(1650, 450);
+        for (let i = 0; i < Schnapsen.deckSize; i++) deck[i] = new GuiCard(cardProperties[i]);
+        for (let i = 0; i < deck.length; i++) {
+            let posX = 30 + ((i % 12) * (GuiCard.size.x + 10)) + GuiCard.size.x / 2;
+            let posY = 30 + (Math.floor(i / 12) * (GuiCard.size.y + 10)) + GuiCard.size.y / 2
+            deck[i].position = createVector(posX, posY);
+        }
+    }
+
+    p.draw = function() {
+        p.background(255);
+        p.fill(4, 70, 109);
+        p.noStroke();
+        p.rect(0, 0, p.width, p.height, 20, 20);
+
+        let highlightedCardIndex = -1;
+        for (let i = 0; i < deck.length; i++) {
+            if (deck[i] == null) continue;
+            if (deck[i].isHighlighted()) highlightedCardIndex = i;
+            deck[i].show(p);
+        }
+
+        if (highlightedCardIndex != -1) deck[highlightedCardIndex].show(p);
+    }
+
+    p.mousePressed = function() {
+        if (p.mouseX <= p.width && p.mouseX >= 0 && p.mouseY <= p.height && p.mouseY >= 0) {
+            for (let i = 0; i < deck.length; i++) {
+                if (deck[i] == null) continue;
+
+                if (deck[i].isMouseOver(p)) {
+                    for (let j = 0; j < deck.length; j++) {
+                        if (deck[j] == null) continue;
+                        if (i != j) deck[j].setHighlight(false);
+                    }
+
+                    deck[i].changeHighlight();
+                    selectedCard = deck[i].isHighlighted() ? { card: deck[i], index: i } : null;
+                }
+            }
+        }
+    }
+}
+
 new p5(canvas1, "canvas1");
+new p5(canvas2, "canvas2");
