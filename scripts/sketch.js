@@ -142,6 +142,25 @@ var canvas1 = function(p) {
                     break;
                 }
             }
+
+            if (cpuCards.length == 8) {
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById("player_" + i + "_name").disabled = true;
+                }
+
+                let elements;
+                elements = document.getElementsByName("player_count");
+                for (const element of elements) element.disabled = true;
+                let playerCount = Array.from(elements).map(e => e.checked).indexOf(true) + 2;
+
+                elements = document.getElementsByName("starting_player");
+                for (const element of elements) element.disabled = true;
+                let firstPlayerID = Array.from(elements).map(e => e.checked).indexOf(true);
+
+                elements = document.getElementsByName("trump_suit");
+                for (const element of elements) element.disabled = true;
+                let trumpSuit = Array.from(elements).map(e => e.checked).indexOf(true);
+            }
         }
     }
 }
