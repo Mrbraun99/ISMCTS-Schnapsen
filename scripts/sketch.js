@@ -24,6 +24,15 @@ class GuiCard {
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------
+
+function getPlayerName(index) {
+    let name = getItem("player_" + index + "_name")
+    return (name == "") ? "Player " + index : name;
+}
+
+//-------------------------------------------------------------------------------------------------------------
+
 var cardProperties = [];
 var cpuCards = [];
 
@@ -39,6 +48,18 @@ function setup() {
                 img: img
             });
         }
+    }
+
+    for (let i = 1; i <= 3; i++) {
+        if (getItem("player_" + i + "_name") == null) storeItem("player_" + i + "_name", "");
+
+        document.getElementById("player_" + i + "_name").value = getItem("player_" + i + "_name");
+        document.getElementById("player_" + i + "_name_display").innerHTML = getPlayerName(i);
+
+        select("#player_" + i + "_name").input(function() {
+            storeItem("player_" + i + "_name", document.getElementById("player_" + i + "_name").value);
+            document.getElementById("player_" + i + "_name_display").innerHTML = getPlayerName(i);
+        });
     }
 }
 
