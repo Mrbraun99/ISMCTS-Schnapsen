@@ -49,6 +49,7 @@ function getPlayerName(index) {
 
 var cardProperties = [];
 var cpuCards = [];
+var game = null;
 
 function setup() {
     createCanvas(900, 700);
@@ -160,6 +161,9 @@ var canvas1 = function(p) {
                 elements = document.getElementsByName("trump_suit");
                 for (const element of elements) element.disabled = true;
                 let trumpSuit = Array.from(elements).map(e => e.checked).indexOf(true);
+
+                game = new Game(cpuCards.map(guiCard => new Card(guiCard.value, guiCard.color)), playerCount, firstPlayerID, trumpSuit);
+                document.getElementById("place_card_button").innerHTML = getPlayerName(firstPlayerID + 1) + " - Place card";
             }
         }
     }
@@ -177,6 +181,25 @@ var canvas2 = function(p) {
             let posY = 30 + (Math.floor(i / 12) * (GuiCard.size.y + 10)) + GuiCard.size.y / 2
             deck[i].position = createVector(posX, posY);
         }
+
+        select("#place_card_button").mousePressed(() => {
+            if (game == null) {
+                alert("At first select cards for cpu!");
+                return;
+            }
+
+            if (selectedCard == null) {
+                alert("Select a card!");
+                return;
+            }
+
+            game.applyMove({ card: selectedCard.card, isSpecial: document.getElementById("20/40_checkbox").checked });
+            document.getElementById("20/40_checkbox").checked = false;
+            document.getElementById("place_card_button").innerHTML = getPlayerName(game.getNextPlayerID() + 1) + " - Place card";
+
+            deck[selectedCard.index] = null;
+            selectedCard = null;
+        });
     }
 
     p.draw = function() {
@@ -213,6 +236,7 @@ var canvas2 = function(p) {
         }
     }
 }
+
 
 new p5(canvas1, "canvas1");
 new p5(canvas2, "canvas2");
