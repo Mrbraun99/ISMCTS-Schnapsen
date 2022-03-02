@@ -10,6 +10,56 @@
 </head>
 
 <body>
+    <h1 style="font-size:40pt">Information Set Monte Carlo Tree Search - Schnapsen</h1>
+    <br>
+    <br>
+    <h1>Number of players:</h1>
+    <ul>
+        <form>
+            <input id="player_count_2" type="radio" style="height:35px; width:35px;vertical-align : middle" name="player_count" checked>
+            <label style="font-size: 40px;vertical-align : middle">2 player</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="player_count_3" type="radio" style="height:35px; width:35px;vertical-align : middle" name="player_count">
+            <label style="font-size: 40px;vertical-align : middle">3 player</label>
+        </form>
+    </ul>
+    <br>
+    <br>
+    <h1>Starting player: </h1>
+    <ul>
+        <form>
+            <input id="starting_player_1" type="radio" style="height:35px; width:35px;vertical-align : middle" name="starting_player" checked>
+            <input id="player_1_name" type="text" style="font-size: 35px;font-size: 40px;vertical-align : middle" maxlength="20" placeholder="Player 1 name (CPU)"></input>
+            <br>
+            <input id="starting_player_2" type="radio" style="height:35px; width:35px;vertical-align : middle" name="starting_player">
+            <input id="player_2_name" type="text" style="font-size: 35px;font-size: 40px;vertical-align : middle" maxlength="20" placeholder="Player 2 name"></input>
+            <br>
+            <input id="starting_player_3" type="radio" style="height:35px; width:35px;vertical-align : middle;display: none" name="starting_player">
+            <input id="player_3_name" type="text" style="font-size: 35px;font-size: 40px;vertical-align : middle;display: none" maxlength="50" placeholder="Player 3 name"></input>
+            <br>
+        </form>
+    </ul>
+    <br>
+    <br>
+    <h1>Trump suit: </h1>
+    <ul>
+        <form>
+            <input type="radio" style="height:35px; width:35px;vertical-align : middle" name="trump_suit" checked>
+            <img src="assets/hearts.png" style="width:100px;height:100px;vertical-align : middle">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" style="height:35px; width:35px;vertical-align : middle" name="trump_suit">
+            <img src="assets/bells.png" style="width:100px;height:100px;vertical-align : middle">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" style="height:35px; width:35px;vertical-align : middle" name="trump_suit">
+            <img src="assets/acorns.png" style="width:100px;height:100px;vertical-align : middle">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" style="height:35px; width:35px;vertical-align : middle" name="trump_suit">
+            <img src="assets/leaves.png" style="width:100px;height:100px;vertical-align : middle">
+        </form>
+    </ul>
+    <br>
+    <br>
+    <h1>Select cards for Cpu: </h1>
     <div id="canvas1"></div>
 </body>
 
