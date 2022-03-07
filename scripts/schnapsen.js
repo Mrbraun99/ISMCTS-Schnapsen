@@ -25,4 +25,51 @@ class Schnapsen {
         }
         return deck;
     }
+
+    static getCantHoldCards(placedCards, placedCard, trumpSuit) {
+        function getPivotCard(color) {
+            for (let i = placedCards.length - 1; i >= 0; i--) {
+                if (placedCards[i].color == color) return placedCards[i];
+            }
+
+            return null;
+        }
+
+        let cantHoldCards = new CardSet();
+
+        if (placedCards.length == 0) return cantHoldCards;
+
+        if (placedCard.color != placedCards[0].color && placedCard.color != trumpSuit) {
+            for (const value of Schnapsen.values) cantHoldCards.append(new Card(value, placedCards[0].color));
+            for (const value of Schnapsen.values) cantHoldCards.append(new Card(value, trumpSuit));
+            return cantHoldCards;
+        }
+
+        if (placedCard.color == placedCards[0].color) {
+            let pivotCard = getPivotCard(placedCards[0].color);
+
+            if (placedCard.value < pivotCard.value) {
+                for (const value of Schnapsen.values) {
+                    if (value > pivotCard.value) cantHoldCards.append(new Card(value, placedCard.color));
+                }
+            }
+
+            return cantHoldCards;
+        }
+
+        if (placedCard.color == trumpSuit) {
+            for (const value of Schnapsen.values) cantHoldCards.append(new Card(value, placedCards[0].color));
+
+            let pivotCard = getPivotCard(trumpSuit);
+            if (pivotCard != null) {
+                if (placedCard.value < pivotCard.value) {
+                    for (const value of Schnapsen.values) {
+                        if (value > pivotCard.value) cantHoldCards.append(new Card(value, placedCard.color));
+                    }
+                }
+            }
+
+            return cantHoldCards;
+        }
+    }
 }
