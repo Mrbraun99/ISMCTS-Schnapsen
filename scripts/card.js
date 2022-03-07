@@ -4,6 +4,10 @@ class Card {
         this.color = color;
     }
 
+    equal(other){
+        return this.value == other.value && this.color == other.color;
+    }
+
     clone() {
         return new Card(this.value, this.color);
     }
@@ -14,7 +18,7 @@ CardSet.prototype = Array.prototype;
 function CardSet() {
     this.contains = function(card) {
         for (let i = 0; i < this.length; i++) {
-            if (this[i].value == card.value && this[i].color == card.color) return true;
+            if (this[i].equal(card)) return true;
         }
         return false;
     }
@@ -74,7 +78,7 @@ function CardSet() {
 
     this.remove = function(card) {
         for (let i = 0; i < this.length; i++) {
-            if (this[i].value == card.value && this[i].color == card.color) {
+            if (this[i].equal(card)) {
                 this.splice(i, 1);
                 break;
             }
