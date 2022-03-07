@@ -10,4 +10,8 @@ class Game {
     applyMove(move) {
 
     }
+
+    getPlayerScore(playerID) {
+        return 0;
+    }
 }
