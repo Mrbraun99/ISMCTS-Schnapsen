@@ -72,4 +72,45 @@ class Schnapsen {
             return cantHoldCards;
         }
     }
+
+    static getCanPlaceCards(placedCards, holdCards, trumpSuit) {
+        function getPivotCard(color) {
+            for (let i = placedCards.length - 1; i >= 0; i--) {
+                if (placedCards[i].color == color) return placedCards[i];
+            }
+
+            return null;
+        }
+
+        let canPlaceCards = new CardSet();
+
+        if (placedCards.length == 0) {
+            canPlaceCards.appendAll(holdCards);
+            return canPlaceCards;
+        }
+
+        if (holdCards.containsWithColor(placedCards[0].color)) {
+            let pivotCard = getPivotCard(placedCards[0].color);
+            canPlaceCards.appendAll(holdCards.getBiggerCards(pivotCard));
+
+            if (canPlaceCards.length == 0) canPlaceCards.appendAll(holdCards.getSmallerCards(pivotCard));
+            return canPlaceCards;
+        }
+
+        if (holdCards.containsWithColor(trumpSuit)) {
+            let pivotCard = getPivotCard(trumpSuit);
+            if (pivotCard == null) {
+                canPlaceCards.appendAll(holdCards.getCardsWithColor(trumpSuit));
+                return canPlaceCards;
+            } else {
+                canPlaceCards.appendAll(holdCards.getBiggerCards(pivotCard));
+
+                if (canPlaceCards.length == 0) canPlaceCards.appendAll(holdCards.getSmallerCards(pivotCard));
+                return canPlaceCards;
+            }
+        }
+
+        canPlaceCards.appendAll(holdCards);
+        return canPlaceCards;
+    }
 }
