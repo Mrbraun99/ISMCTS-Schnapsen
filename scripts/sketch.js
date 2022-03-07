@@ -193,6 +193,13 @@ var canvas2 = function(p) {
                 return;
             }
 
+            try {
+                game.applyMove({ card: selectedCard.card, isSpecial: document.getElementById("20/40_checkbox").checked });
+            } catch (e) {
+                alert(e);
+                return;
+            }
+
             game.applyMove({ card: selectedCard.card, isSpecial: document.getElementById("20/40_checkbox").checked });
             document.getElementById("20/40_checkbox").checked = false;
             document.getElementById("place_card_button").innerHTML = getPlayerName(game.getNextPlayerID() + 1) + " - Place card";
@@ -200,7 +207,7 @@ var canvas2 = function(p) {
             document.getElementById("player_1_score").innerHTML = str(game.getPlayerScore(0));
             document.getElementById("player_2_score").innerHTML = str(game.getPlayerScore(1));
             document.getElementById("player_3_score").innerHTML = str(game.getPlayerScore(2));
-            
+
             deck[selectedCard.index] = null;
             selectedCard = null;
         });

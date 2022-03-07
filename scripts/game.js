@@ -8,7 +8,7 @@ class Game {
     }
 
     applyMove(move) {
-
+        throw "This move is illegal!";
     }
 
     getPlayerScore(playerID) {
