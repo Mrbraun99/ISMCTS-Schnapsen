@@ -113,4 +113,17 @@ class Schnapsen {
         canPlaceCards.appendAll(holdCards);
         return canPlaceCards;
     }
+
+    static getWinner(placedCards, trumpSuit) {
+        let scores = [];
+        for (let i = 0; i < placedCards.length; i++) {
+            let score = 0;
+            if (placedCards[i].color == trumpSuit) score += 1000;
+            if (placedCards[i].color == placedCards[0]) score += 100;
+            score += placedCards[i].value;
+            scores[i] = score;
+        }
+
+        return scores.indexOf(Math.max(...scores));
+    }
 }
