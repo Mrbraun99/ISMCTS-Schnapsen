@@ -21,18 +21,19 @@ class Game {
         }
 
         this.order = [];
-        for (let i = 0; i < this.playerCount; i++) this.order[i] = (firstPlayerID + i) % this.playerCount;     
+        for (let i = 0; i < this.playerCount; i++) this.order[i] = (firstPlayerID + i) % this.playerCount;
     }
 
     getNextPlayerID() {
-        return 0;
+        return this.order[0];
+    }
+
+    getPlayerScore(playerID) {
+        if (playerID >= this.playerCount) return 0;
+        return this.players[playerID].score;
     }
 
     applyMove(move) {
         throw "This move is illegal!";
-    }
-
-    getPlayerScore(playerID) {
-        return 0;
     }
 }
