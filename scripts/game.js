@@ -34,6 +34,55 @@ class Game {
     }
 
     applyMove(move) {
-        throw "This move is illegal!";
+        let activePlayer = this.players[this.getNextPlayerID()];
+        if (!activePlayer.fixedCards.contains(move.card) && !activePlayer.possibleCards.contains(move.card)) throw "This move is illegal!";
+
+        activePlayer.cardCount--;
+        activePlayer.fixedCards.remove(move.card);
+        for (let i = 0; i < this.playerCount; i++) this.players[i].possibleCards.remove(move.card);
+
+        if (move.isSpecial) {
+            activePlayer.score += (move.card.color == this.trumpSuit) ? 40 : 20;
+            activePlayer.fixedCards.append((move.card.value == Schnapsen.III) ? new Card(Schnapsen.IV, move.card.color) : new Card(Schnapsen.III, move.card.color));
+        }
+
+        activePlayer.possibleCards.removeAll(Schnapsen.getCantHoldCards(this.placedCards, move.card, this.trumpSuit));
+        this.reEvaulatePlayers();
+        
+        this.placedCards.append(move.card);
+        this.moveHistory.push({ playerID: this.getNextPlayerID() });
+        this.order.shift();
+
+        if (this.placedCards.length == this.playerCount) {
+            let winnerID = this.moveHistory[Schnapsen.getWinner(this.placedCards, this.trumpSuit)].playerID;
+
+            this.players[winnerID].score += this.placedCards.map((card) => card.value).reduce((pSum, a) => pSum + a, 0);
+            this.players[winnerID].wins += 1;
+            for (let i = 0; i < this.playerCount; i++) this.order[i] = (winnerID + i) % this.playerCount;
+
+            this.placedCards = new CardSet();
+            this.moveHistory = [];
+        }
+    }
+
+    reEvaulatePlayers() {
+        while (true) {
+            let checkAgain = false;
+
+            let fixedCards = new CardSet();
+            for (const player of this.players) fixedCards.appendAll(player.fixedCards);
+            for (const player of this.players) player.possibleCards.removeAll(fixedCards);
+
+            for (let player of this.players) {
+                if (player.possibleCards.length == 0) continue;
+
+                if (player.possibleCards.length + player.fixedCards.length == player.cardCount) {
+                    player.fixedCards.appendAll(player.possibleCards);
+                    checkAgain = true;
+                }
+            }
+
+            if (!checkAgain) break;
+        }
     }
 }
