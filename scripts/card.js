@@ -6,11 +6,7 @@ class Card {
 
     equal(other){
         return this.value == other.value && this.color == other.color;
-    }
-
-    clone() {
-        return new Card(this.value, this.color);
-    }
+    }    
 }
 
 CardSet.prototype = Array.prototype;
@@ -94,11 +90,5 @@ function CardSet() {
 
     this.getRandom = function(count) {
         return new CardSet().appendAll(shuffle(this, false).slice(0, Math.min(count, this.length)));
-    }
-
-    this.clone = function() {
-        let cards = new CardSet();
-        for (let i = 0; i < this.length; i++) cards.append(this[i].clone());
-        return cards;
     }
 }
