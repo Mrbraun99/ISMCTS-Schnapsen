@@ -194,13 +194,12 @@ var canvas2 = function(p) {
             }
 
             try {
-                game.applyMove({ card: selectedCard.card, isSpecial: document.getElementById("20/40_checkbox").checked });
+                game.applyMove({ card: new Card(selectedCard.card.value, selectedCard.card.color), isSpecial: document.getElementById("20/40_checkbox").checked });
             } catch (e) {
                 alert(e);
                 return;
             }
 
-            game.applyMove({ card: selectedCard.card, isSpecial: document.getElementById("20/40_checkbox").checked });
             document.getElementById("20/40_checkbox").checked = false;
             document.getElementById("place_card_button").innerHTML = getPlayerName(game.getNextPlayerID() + 1) + " - Place card";
 
