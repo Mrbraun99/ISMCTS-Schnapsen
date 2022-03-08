@@ -119,11 +119,11 @@ class Schnapsen {
         for (let i = 0; i < placedCards.length; i++) {
             let score = 0;
             if (placedCards[i].color == trumpSuit) score += 1000;
-            if (placedCards[i].color == placedCards[0]) score += 100;
+            if (placedCards[i].color == placedCards[0].color) score += 100;
             score += placedCards[i].value;
             scores[i] = score;
         }
-
+        
         return scores.indexOf(Math.max(...scores));
     }
 }
