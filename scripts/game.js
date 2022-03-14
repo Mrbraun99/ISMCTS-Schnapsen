@@ -33,6 +33,10 @@ class Game {
         return this.players[playerID].score;
     }
 
+    isCpuNext() {
+        return this.order[0] == 0;
+    }
+
     applyMove(move) {
         let activePlayer = this.players[this.getNextPlayerID()];
         if (!activePlayer.fixedCards.contains(move.card) && !activePlayer.possibleCards.contains(move.card)) throw "This move is illegal!";

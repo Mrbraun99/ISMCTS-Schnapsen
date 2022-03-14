@@ -210,6 +210,18 @@ var canvas2 = function(p) {
             deck[selectedCard.index] = null;
             selectedCard = null;
         });
+
+        select("#ai_advice_button").mousePressed(() => {
+            if (game == null) {
+                alert("At first select cards for cpu!");
+                return;
+            }
+
+            if (!game.isCpuNext()) {
+                alert("Not cpu's turn!");
+                return;
+            }    
+        });
     }
 
     p.draw = function() {
