@@ -52,7 +52,7 @@ class Game {
 
         activePlayer.possibleCards.removeAll(Schnapsen.getCantHoldCards(this.placedCards, move.card, this.trumpSuit));
         this.reEvaulatePlayers();
-        
+
         this.placedCards.append(move.card);
         this.moveHistory.push({ playerID: this.getNextPlayerID() });
         this.order.shift();
@@ -88,5 +88,22 @@ class Game {
 
             if (!checkAgain) break;
         }
+    }
+
+    determinize() {
+        function combineCards(fixedCards, possibleCards, cardCount) {
+            let cards = new CardSet();
+            cards.appendAll(fixedCards);
+            cards.appendAll(possibleCards.getRandom(cardCount - cards.length));
+            return cards;
+        }
+
+        let detPlayers = [];
+        for (const player of this.players) {
+            let cards = combineCards(player.fixedCards, player.possibleCards, player.cardCount);
+            detPlayers.push({ id: player.id, teamCpu: player.teamCpu, score: player.score, wins: player.wins, cards: cards });
+        }
+
+        return new DetGameState(detPlayers, this.playerCount, this.getNextPlayerID(), this.trumpSuit);
     }
 }
