@@ -220,7 +220,24 @@ var canvas2 = function(p) {
             if (!game.isCpuNext()) {
                 alert("Not cpu's turn!");
                 return;
-            }    
+            }
+
+            for (let i = 0; i < deck.length; i++) {
+                if (deck[i] == null) continue;
+                deck[i].setHighlight(false);
+            }
+
+            let bestMove = ISMCTS.getCpuAdvice(game, 10);
+
+            for (let i = 0; i < deck.length; i++) {
+                if (deck[i] == null) continue;
+                if (deck[i].value == bestMove.card.value && deck[i].color == bestMove.card.color) {
+                    deck[i].setHighlight(true);
+                    selectedCard = { card: deck[i], index: i };
+                }
+            }
+
+            document.getElementById("20/40_checkbox").checked = bestMove.isSpecial;
         });
     }
 
