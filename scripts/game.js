@@ -104,6 +104,6 @@ class Game {
             detPlayers.push({ id: player.id, teamCpu: player.teamCpu, score: player.score, wins: player.wins, cards: cards });
         }
 
-        return new DetGameState(detPlayers, this.playerCount, this.getNextPlayerID(), this.trumpSuit);
+        return new DetGameState(detPlayers, this.moveHistory.map((move) => { move.playerID }), new CardSet().appendAll(this.placedCards), this.playerCount, this.getNextPlayerID(), this.trumpSuit);
     }
 }
