@@ -86,6 +86,25 @@ class Game {
                 }
             }
 
+            if (this.players.length == 3) {
+                for (const card of Schnapsen.getDeck()) {
+                    let cardCount = 0;
+                    let holderID = null;
+
+                    for (let i = 0; i < 3; i++) {
+                        if (this.players[0].possibleCards.contains(card)) {
+                            holderID = i;
+                            cardCount++;
+                        }
+                    }
+
+                    if (cardCount == 1) {
+                        this.players[holderID].fixedCards.append(card);
+                        checkAgain = true;
+                    }
+                }
+            }
+
             if (!checkAgain) break;
         }
     }
