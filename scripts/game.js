@@ -37,7 +37,7 @@ class Game {
         return this.order[0] == 0;
     }
 
-    applyMove(move) {
+    applyMove(move) {       
         let activePlayer = this.players[this.getNextPlayerID()];
         if (!activePlayer.fixedCards.contains(move.card) && !activePlayer.possibleCards.contains(move.card)) throw "This move is illegal!";
 
@@ -123,6 +123,9 @@ class Game {
             detPlayers.push({ id: player.id, teamCpu: player.teamCpu, score: player.score, wins: player.wins, cards: cards });
         }
 
-        return new DetGameState(detPlayers, this.moveHistory.map((move) => { move.playerID }), new CardSet().appendAll(this.placedCards), this.playerCount, this.getNextPlayerID(), this.trumpSuit);
+        let moveHistoryClone = [];
+        for (let i = 0; i < this.moveHistory.length;i++) moveHistoryClone[i] = {playerID : this.moveHistory[i].playerID};
+
+        return new DetGameState(detPlayers, moveHistoryClone, new CardSet().appendAll(this.placedCards), this.playerCount, this.getNextPlayerID(), this.trumpSuit);
     }
 }
