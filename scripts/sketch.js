@@ -227,7 +227,7 @@ var canvas2 = function(p) {
                 deck[i].setHighlight(false);
             }
 
-            let bestMove = ISMCTS.getCpuAdvice(game, 10);
+            let bestMove = ISMCTS.getCpuAdvice(game, 1);
 
             for (let i = 0; i < deck.length; i++) {
                 if (deck[i] == null) continue;
