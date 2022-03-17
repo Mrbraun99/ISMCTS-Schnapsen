@@ -39,6 +39,15 @@ class DetGameState {
     }
 
     applyMove(move) {
+        function getExtraPoints(cards, trumpSuit) {
+            if (cards.contains(new Card(Schnapsen.III, trumpSuit)) && cards.contains(new Card(Schnapsen.IV, trumpSuit))) return 40;
+
+            for (const color of colors) {
+                if (color == trumpSuit) continue;
+                if (cards.contains(new Card(Schnapsen.III, color)) && cards.contains(new Card(Schnapsen.IV, color))) return 40;
+            }
+        }
+
         let activePlayer = this.players[this.getNextPlayerID()];
         activePlayer.cards.remove(move.card);
         if (move.isSpecial) activePlayer.score += (move.card.color == this.trumpSuit) ? 40 : 20;
@@ -68,6 +77,8 @@ class DetGameState {
                         winnerTeamWins += player.wins;
                     }
                 }
+
+                winnerTeamScore += getExtraPoints(this.players[winnerID].cards, this.trumpSuit);
 
                 if (winnerTeamWins > 0 && winnerTeamScore >= 66) this.resultFromCpuPerspective = this.calculateResultFromCpuPerspective(winnerID);
             }
