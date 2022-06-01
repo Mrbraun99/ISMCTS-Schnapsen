@@ -42,7 +42,7 @@ class DetGameState {
         function getExtraPoints(cards, trumpSuit) {
             if (cards.contains(new Card(Schnapsen.III, trumpSuit)) && cards.contains(new Card(Schnapsen.IV, trumpSuit))) return 40;
 
-            for (const color of colors) {
+            for (const color of Schnapsen.colors) {
                 if (color == trumpSuit) continue;
                 if (cards.contains(new Card(Schnapsen.III, color)) && cards.contains(new Card(Schnapsen.IV, color))) return 40;
             }
